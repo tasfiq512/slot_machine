@@ -34,3 +34,33 @@ def get_bet():
         else:
             print("Please enter a number .")
     return amount
+def spin(balance):
+    lines=get_number_of_line()
+    while True:
+      bet=get_bet()
+      total_bet=bet*lines
+      if total_bet>balance:
+          print(f"You do not have enough to bet that amount,Your current balance is : ${balance}")
+      else:
+          break
+    print(f"You are betting ${bet} on {lines} lines. Total bet is equal to: ${total_bet}")
+
+    slots=get_slot_machine_spin(ROWS,COLS,symbol_value)
+    print_slot_machine(slots)
+    winning,winning_lines=check_winning(slots,lines,bet,symbol_value)
+    print(f"You won ${winning}.")
+    print(f"you won on lines:",*winning_lines)
+    return winning -total_bet
+def main():
+    balance= deposit()
+    while True:
+        print(f"current balance is ${balance}")
+        answer=input("press enter to spin (q to quit) .")
+        if answer == "q":
+            break
+        balance+= spin(balance)
+
+    print(f"you left with ${balance}")
+   
+
+main()
